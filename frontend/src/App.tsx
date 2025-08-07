@@ -21,20 +21,39 @@ function AppContent() {
  const [cartOpen, setCartOpen] = useState(false);
  const location = useLocation();
  const { cart } = useCart();
-
-
- // Auto-close sidebar on route change
- useEffect(() => {
-   setCartOpen(false);
- }, [location.pathname]);
-
-
  const hasItems = cart.length > 0;
 
+  useEffect(() => {
+      if (cartOpen) {
+        document.body.style.overflow = 'hidden';  // disable scroll
+      } else {
+        document.body.style.overflow = 'auto';    // re-enable scroll
+      }
+
+      return () => {
+        document.body.style.overflow = 'auto';    // cleanup
+      };
+    }, [cartOpen]);
+  
+    // Close cart on ESC key
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setCartOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, []);
+    
+  // Auto-close sidebar on route change
+  useEffect(() => {
+      setCartOpen(false); // close cart on route change
+    }, [location.pathname]);
 
  return (
    <div className="flex min-h-screen bg-gray-100">
-     <main className="flex-grow p-6 overflow-auto">
+     {/*<main className="flex-grow p-6 overflow-auto">*/}
        <Layout>
          <Routes>
            <Route path="/" element={<Home />} />
@@ -46,20 +65,25 @@ function AppContent() {
            <Route path="/order-confirmation" element={<OrderConfirmation />} />
            <Route path="*" element={<Navigate to="/" replace />} />
          </Routes>
+         {/*<FloatingCartButton onClick={() => setCartOpen(true)} isVisible={!cartOpen && hasItems} />*/}
        </Layout>
-     </main>
+   {/*  </main> */}
    
      {/* Floating button for mobile/tablet */}
      <FloatingCartButton onClick={() => setCartOpen(true)} isVisible={!cartOpen && hasItems} />
     
-     {/* Slide-out Cart Sidebar for mobile */}
+    {/*  Slide-out Cart Sidebar for mobile */}
      {cartOpen && (
        <div className="fixed inset-0 z-40 bg-black bg-opacity-40 lg:hidden" onClick={() => setCartOpen(false)}>
          <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg" onClick={(e) => e.stopPropagation()}>
-           <CartSidebar />
+           <CartSidebar
+             isOpen={cartOpen}
+             onClose={() => setCartOpen(false)}
+             isMobile={true}
+           />
          </div>
        </div>
-     )}
+     )} 
    </div>
  );
 }

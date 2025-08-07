@@ -4,6 +4,7 @@ import { useCustomer } from "../contexts/CustomerContext";
 import NewCustomerForm from "./NewCustomerForm";
 import toast from "react-hot-toast";
 import axios from "axios";
+import api from "../utils/Api";
 
 
 const CustomerCheckFlow = () => {
@@ -21,8 +22,9 @@ const CustomerCheckFlow = () => {
 
  const handleGuestContinue = async () => {
    try {
-     const res = await axios.get("/api/customers/customers/guest/");
+     const res = await api("/customers/guest/");
      setCustomer(res.data);
+     console.log("Guest customer loaded:", res.data);
      toast.success("Continuing as Guest");
      //onCustomerVerified();
    } catch (err) {

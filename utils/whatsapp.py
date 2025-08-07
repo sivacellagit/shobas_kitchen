@@ -1,6 +1,8 @@
 # utils/whatsapp.py
 from datetime import timezone
 from django.utils import timezone
+import logging
+logger = logging.getLogger(__name__)
 
 
 def build_whatsapp_receipt(order):
@@ -10,7 +12,7 @@ def build_whatsapp_receipt(order):
        item_name = oi.item.name if oi.item else "Unknown Item"
        items_text += f"• {item_name} x {oi.quantity} - ₹{int(float(oi.price))} = ₹{int(float(oi.price) * float(oi.quantity))}\n"
 
-
+   logger.info(f"Order ID: {order.id}, Customer: {customer}, Items: {items_text}")
    created_date = timezone.localtime(order.created_at).strftime('%d %B %Y, %-I:%M %p')
 
 
@@ -27,7 +29,7 @@ def build_whatsapp_receipt(order):
 
 
 🧑‍🍳 Name: {customer.name}
-📞 Phone: +91 {customer.phone_number}
+📞 Phone: +91 {customer.user.phone_number}
 🧾 Order ID: #ORD{order.id:04d}
 📅 Date: {created_date}
 

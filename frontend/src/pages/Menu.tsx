@@ -66,8 +66,10 @@ useEffect(() => {
 
 useEffect(() => {
   const fetchDiscounts = async () => {
-    if (!customer) return;
-
+    const isGuest = customer?.username === "guest";
+    console.log("Fetching discounts for customer:", customer?.id, "isGuest:", isGuest);
+    if (!customer || isGuest) return;
+    console.log("After Fetching discounts for customer:", customer?.id, "isGuest:", isGuest);
     try {
       const res = await api(`/orders/purchased-items/?customer_id=${customer.id}`);
       const purchasedIds = res.data.purchased_item_ids || [];

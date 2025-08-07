@@ -13,6 +13,7 @@ const Header = () => {
 
 
  return (
+  <nav className="bg-white shadow fixed top-0 w-full z-50 border-b border-gray-100">
    <header className="bg-white shadow-md sticky top-0 z-10">
      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
        <h1 className="text-xl font-bold text-green-700">Shoba’s Kitchen</h1>
@@ -36,19 +37,19 @@ const Header = () => {
 
 
        {/* Mobile Toggle */}
-       {/*<button
+       <button
          className="lg:hidden"
          onClick={() => setIsMenuOpen(!isMenuOpen)}
          aria-label="Toggle Menu"
        >
          {isMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
        </button>
-     </div> */}
+     {/*</div> */}
 
 
      {/* Mobile Icons */}
 <div className="flex items-center space-x-4 lg:hidden">
- {/* Cart Icon
+ {/* Cart Icon 
  <Link to="/cart" className="relative">
    <ShoppingCart className="w-5 h-5" />
    {cart.length > 0 && (
@@ -59,13 +60,13 @@ const Header = () => {
  </Link> */}
 
 
- {/* Hamburger Toggle */}
+ {/* Hamburger Toggle 
  <button
    onClick={() => setIsMenuOpen(!isMenuOpen)}
    aria-label="Toggle Menu"
  >
    {isMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
- </button>
+ </button>*/}
 </div>
 </div>
 
@@ -88,6 +89,7 @@ const Header = () => {
 )}
 </div>
    </header>
+   </nav>
  );
 };
 

@@ -256,7 +256,7 @@ class OrderViewSet(viewsets.ModelViewSet):
          except Order.DoesNotExist:
                return Response({"error": "Order not found."}, status=404)
          receipt_text = build_whatsapp_receipt(order)
-         send_result = send_whatsapp_message(order.customer.phone_number, receipt_text)
+         send_result = send_whatsapp_message(order.customer.user.phone_number, receipt_text)
          if send_result:
                return Response({"success": True, "message": receipt_text})
          else:
@@ -275,7 +275,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         address = data.get("customer_address")
         if not phone:
              return Response({"error": "Phone number is required"}, status=400)
-        customer = CustomerProfile.objects.filter(phone_number=phone).first()
+        customer = CustomerProfile.objects.filter(user__phone_number=phone).first()
         if not customer:
              user = User.objects.create(username=phone)
              customer = CustomerProfile.objects.create(

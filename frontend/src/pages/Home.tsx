@@ -1,12 +1,82 @@
-import Navbar from "../components/NavBar";
 import Footer from "../layout/Footer";
+import Layout from "../layout/Layout";
+import Header from "../layout/Header";
 
+const Home = () => {
+  return (
+    
+      <div className="bg-gradient-to-br from-yellow-50 via-white to-green-50 w-full">
+        <section className="max-w-7xl mx-auto px-6 py-12 text-gray-800">
+          <header className="text-center mb-12">
+            <h1 className="text-4xl font-extrabold text-green-800 mb-3">
+              Welcome to <span className="italic text-green-700">Shoba’s Kitchen – Curry Club</span>
+            </h1>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Your Neighbourhood Takeaway for Authentic Home-Style Veg & Non-Veg Delights. <br />
+              From comforting curries to crispy snacks, we serve homely flavors every day.
+            </p>
+          </header>
+
+          {/* Signature Offerings */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold text-green-800 mb-6">🥘 Our Signature Offerings</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                ["🌶️ Curries", "Sambar • Chicken Gravy • Rasam • Fish Kulambu"],
+                ["🍚 Variety Rice", "Lemon Rice • Vegetable Biryani • Tamarind Rice"],
+                ["🍽️ Tiffin", "Idly • Dosa • Chapati"],
+                ["🍟 Snacks", "Gobi 65 • Vada • Bajji"],
+              ].map(([title, items]) => (
+                <div className="bg-white rounded-lg shadow p-6" key={title}>
+                  <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                  <p className="text-gray-700">{items}</p>
+                </div>
+              ))}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6 shadow">
+                <h3 className="font-semibold text-green-700 mb-1">🎒 School Lunches</h3>
+                <p className="text-gray-700">Nutritious, kid-friendly lunch boxes for school children.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Loyalty */}
+          <section className="mb-12">
+            <h2 className="text-3xl font-semibold text-green-800 mb-4">🎁 Loyalty That Rewards You</h2>
+            <ul className="list-disc list-inside bg-yellow-50 border border-yellow-200 rounded-lg shadow p-6 space-y-2">
+              <li><strong>15% off</strong> on your first order as a welcome gift</li>
+              <li><strong>5% off</strong> when trying a new item</li>
+              <li>🎂 <strong>Birthday & anniversary discounts</strong></li>
+              <li>💬 <strong>Earn points</strong> by sharing feedback</li>
+              <li>⭐ <strong>Redeem points</strong> for future savings</li>
+            </ul>
+          </section>
+
+          {/* CTA */}
+          <section className="text-center bg-green-100 py-6 rounded-lg shadow">
+            <h3 className="text-xl font-bold text-green-800 mb-2">🚚 Takeaway Made Simple</h3>
+            <p className="text-gray-700">
+              Place your order online or offline and enjoy a smooth, fast, and delightful experience.
+            </p>
+            <p className="mt-3 font-medium text-green-900">
+              👉 <strong>Home food is the best food</strong>
+            </p>
+          </section>
+        </section>
+      </div>
+   
+  );
+};
+
+export default Home;
+
+{/*import Layout from "../layout/Layout";
 
 const Home = () => {
  return (
+  <Layout>
    <div className="bg-gradient-to-br from-yellow-50 via-white to-green-50 min-h-screen">
-     <Navbar />
-     {/* Add padding top to account for fixed navbar */}
+     {/*<Navbar />*/}
+     {/* Add padding top to account for fixed navbar *
      <main className="max-w-4xl mx-auto px-4 pt-24 pb-10 text-gray-800">
        <header className="mb-10 text-center pt-24">
          <h1 className="text-3xl font-bold text-green-800 mb-2">
@@ -26,25 +96,6 @@ const Home = () => {
          </p>
        </header>
 
-
-    {/*   <header className="mb-10 text-center">
-         <h1 className="text-4xl font-extrabold text-green-700 mb-3 drop-shadow">
-           🍛 Welcome to <em>Shoba’s Kitchen – Curry Club</em>
-         </h1>
-         <p className="text-lg mb-4 italic text-gray-600">
-           Your Neighbourhood Takeaway for Authentic Home-Style Veg & Non-Veg Delights
-         </p>
-         <p className="mb-2 text-gray-700">
-           At <strong>Shoba’s Kitchen – Curry Club</strong>, we bring the warmth of home-cooked food to your table.
-           Specializing in both <strong>vegetarian and non-vegetarian</strong> dishes, we take pride in serving
-           <strong> tasty, hygienic, and high-quality meals</strong> every single day.
-         </p>
-         <p className="mb-0 text-gray-700">
-           Whether you're craving a comforting curry, a flavorful rice bowl, or a quick snack, our menu is designed to satisfy
-           your hunger with authentic taste and soul-satisfying flavour.
-         </p>
-       </header>
-     */}
        <section className="mb-10">
          <h2 className="text-2xl font-semibold text-green-800 mb-4 flex items-center gap-2">
            🥘 Our Signature Offerings
@@ -123,12 +174,14 @@ const Home = () => {
            <p><a href="/login-admin" className="hover:text-green-600 underline">Admin Login</a></p>
          </div>
        </footer>
-       */}
-       <Footer />
+       
      </main>
    </div>
+   </Layout>
  );
 };
 
 
 export default Home;
+
+*/}

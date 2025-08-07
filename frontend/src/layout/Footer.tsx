@@ -1,73 +1,103 @@
 import React from "react";
-import { useAuth } from "../contexts/AuthContext";
 
+const Footer = () => {
+  return (
+    <footer className="bg-white border-t text-sm text-gray-600 py-6 mt-auto px-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-6">
+        <div>
+          <p><strong>FSSAI No:</strong> 22423072000485</p>
+          <p>
+            <strong>WhatsApp:</strong>{" "}
+            <a href="https://wa.me/917845502013" className="text-green-600 hover:underline">+91 78455 02013</a>
+          </p>
+        </div>
+        <div>
+          <p><strong>Address:</strong> No.6, Sri Mahalakshmai Nagar, Kolapakkam, Chennai 600122</p>
+          <p>
+            <strong>Website:</strong>{" "}
+            <a href="https://www.shobaskitchen.com" target="_blank" rel="noreferrer" className="text-green-600 hover:underline">
+              www.shobaskitchen.com
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-const AdminDashboard = () => {
- const { auth } = useAuth();
+export default Footer;
 
+{/*const Footer = () => {
+  return (
+<footer className="bg-white border-t py-6 text-sm text-gray-600 px-4 md:px-8">
+  <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-4">
+    <div>
+      <p><strong>FSSAI Registration No:</strong> 22423072000485</p>
+      <p>
+        <strong>Contact / WhatsApp:</strong>{" "}
+        <a href="https://wa.me/917845502013" className="text-green-600 hover:underline">
+          +91 78455 02013
+        </a>
+      </p>
+    </div>
 
- return (
-   <div className="p-6 max-w-6xl mx-auto">
-     <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-
-
-     <div className="mb-4 text-lg">
-       Welcome, <strong>{auth?.user?.username || "Admin"}</strong>!
-     </div>
-
-
-     {/* Admin Panels */}
-     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-       {/* Menu Management */}
-       <div className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition">
-         <h2 className="text-xl font-semibold mb-2">Menu Management</h2>
-         <p className="text-gray-600 text-sm mb-2">
-           Create, update, or disable menu categories and items.
-         </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-           Go to Menu Management
-         </button>
-       </div>
-
-
-       {/* Staff Management */}
-       <div className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition">
-         <h2 className="text-xl font-semibold mb-2">Staff Management</h2>
-         <p className="text-gray-600 text-sm mb-2">
-           Add or manage staff roles like cashier, chef, delivery.
-         </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-           Manage Staff
-         </button>
-       </div>
-
-
-       {/* Order Reports */}
-       <div className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition">
-         <h2 className="text-xl font-semibold mb-2">Order Reports</h2>
-         <p className="text-gray-600 text-sm mb-2">
-           View daily, weekly, or custom date range reports.
-         </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-           View Reports
-         </button>
-       </div>
-
-
-       {/* Loyalty Points */}
-       <div className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition">
-         <h2 className="text-xl font-semibold mb-2">Loyalty Program</h2>
-         <p className="text-gray-600 text-sm mb-2">
-           Manage loyalty point configurations and redemptions.
-         </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-           Loyalty Settings
-         </button>
-       </div>
-     </div>
-   </div>
+    <div>
+      <p><strong>Address:</strong> No.6, Sri Mahalakshmai Nagar, Kolapakkam, Chennai 600122</p>
+      <p>
+        <strong>Website:</strong>{" "}
+        <a href="https://www.shobaskitchen.com" target="_blank" rel="noreferrer" className="text-green-600 hover:underline">
+          www.shobaskitchen.com
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
  );
 };
 
+export default Footer; */}
+{/*}
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default AdminDashboard;
+const Footer = () => {
+  return (
+    <footer className="text-sm text-gray-600 border-t pt-6 mt-8 flex flex-col md:flex-row md:justify-between gap-4 bg-white rounded-b-xl px-4">
+      <div>
+        <p><strong>FSSAI Registration No:</strong> 22423072000485</p>
+        <p>
+          <strong>Contact / WhatsApp:</strong>{" "}
+          <a href="https://wa.me/917845502013" className="text-green-600 hover:underline">
+            +91 78455 02013
+          </a>
+        </p>
+       {/* <div className="mt-4">
+          <p className="text-gray-500">Internal Access:</p>
+          <div className="flex gap-4 mt-1">
+            <Link to="/login-staff" className="text-green-700 hover:underline">Staff Login</Link>
+            <Link to="/login-admin" className="text-green-700 hover:underline">Admin Login</Link>
+          </div>
+        </div>
+      
+      </div>
+
+      <div>
+        <p><strong>Address:</strong> No.6, Sri Mahalakshmai Nagar, Kolapakkam, Chennai 600122</p>
+        <p>
+          <strong>Website:</strong>{" "}
+          <a
+            href="https://www.shobaskitchen.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-green-600 hover:underline"
+          >
+            www.shobaskitchen.com
+          </a>
+        </p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+*/}

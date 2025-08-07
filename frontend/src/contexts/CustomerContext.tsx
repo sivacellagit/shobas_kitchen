@@ -52,7 +52,7 @@ export const CustomerProvider = ({ children }: { children: ReactNode }) => {
  const fetchCustomerByPhone = async (phone: string) => {
    try {
      console.log("Checking customer with phone: from fetchCustomerByPhone", phone);
-     const res = await api.get(`/api/customers/lookup?phone=${phone}`);
+     const res = await api.get(`/customers/lookup?phone=${phone}`);
      setCustomerState(res.data);
      setCustomerNotFound(false);
      console.log("Customer found:", res.data);

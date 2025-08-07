@@ -27,6 +27,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 
  const addToCart = (item: Omit<CartItem, "quantity">) => {
+  console.log("Adding item to cart:", item);
    setCart(prev => {
      const existing = prev.find(i => i.id === item.id);
      if (existing) {
@@ -34,8 +35,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
        );
      }
+     console.log("Item not in cart, adding new item");
      return [...prev, { ...item, quantity: 1 }];
    });
+    console.log("Cart after adding item:", cart);
  };
 
 
