@@ -18,7 +18,9 @@ from .models import OTPRequest, OTPVerification
 import random
 from datetime import timedelta
 from django.utils import timezone
+import logging
 
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -26,54 +28,84 @@ User = get_user_model()
 @api_view(["POST"])
 def send_otp_view(request):
    phone_number = request.data.get("phone_number")
+   logger.info(f"Request to send OTP to phone: {phone_number}")
    if not phone_number:
-       return Response({"error": "Phone number is required"}, status=400)
+       return Response({"error": "Phone number is required"}, status=status.HTTP_400_BAD_REQUEST)
 
 
    cooldown_threshold = timezone.now() - timedelta(minutes=1)
    recent_otp = OTPVerification.objects.filter(phone_number=phone_number).order_by("-created_at").first()
-
+   logger.info(f"Recent OTP for {phone_number}: {recent_otp}")
 
    if recent_otp and recent_otp.created_at > cooldown_threshold:
        return Response({"error": "Please wait before requesting another OTP."}, status=429)
-
+   try:
+        user = CustomUser.objects.get(phone_number=phone_number)
+        role = user.role
+        is_registered = True
+   except CustomUser.DoesNotExist:
+        role = None
+        is_registered = False
 
    otp = generate_otp()
+   logger.info(f"Generated OTP: {otp} for phone: {phone_number}")
    send_otp(phone_number, otp)  # Twilio integrated here
    OTPVerification.objects.create(phone_number=phone_number, otp=otp)
 
+   return Response({
+        "message": "OTP sent",
+        "role": role,
+        "is_registered": is_registered
+ })
+   #return Response({"success": True, "message": "OTP sent."})
 
-   return Response({"success": True, "message": "OTP sent."})
+@api_view(['POST'])
+def verify_otp(request):
+    phone_number = request.data.get('phone_number')
+    otp = request.data.get('otp')
 
+    if not phone_number or not otp:
+        return Response({"error": "Phone number and OTP are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    if not verify_otp_code(phone_number, otp):
+        return Response({"success": False, "message": "Invalid OTP"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = CustomUser.objects.get(phone_number=phone_number)
+        role = user.role
+        is_registered = True
+        token = create_jwt_for_user(user)
+    except CustomUser.DoesNotExist:
+        role = None
+        is_registered = False
+        token = None
+
+    return Response({
+        "success": True,
+        "role": role,
+        "is_registered": is_registered,
+        "token": token
+    })
 
 class SendOTPView(APIView):
    def post(self, request):
+       logger.info("Received request to send OTP")
        serializer = SendOTPSerializer(data=request.data)
        if serializer.is_valid():
            phone = serializer.validated_data['phone_number']
            otp = f"{random.randint(1000, 9999)}"
-
-
            expires_at = timezone.now() + timedelta(minutes=5)
-
-
            OTPRequest.objects.create(
                phone_number=phone,
                otp=otp,
                expires_at=expires_at
            )
-
-
+           logger.info(f"OTP {otp} generated for phone {phone}")
+          # send_otp_view(request)
            # TODO: Integrate with SMS/WhatsApp gateway
            print(f"🔐 Sending OTP {otp} to {phone}")
-
-
            return Response({"message": "OTP sent successfully"}, status=200)
-
-
        return Response(serializer.errors, status=400)
-
-
 
 
 class VerifyOTPView(APIView):

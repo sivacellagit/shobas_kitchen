@@ -122,7 +122,6 @@ const OrderConfirmation = () => {
        {customer.address && <p><strong>Address:</strong> {customer.address}</p>}
      </div>
 
-
      <div className="mb-6">
        <h2 className="text-xl font-semibold text-gray-800">Order Summary</h2>
        <table className="w-full mt-2 text-sm border-t border-b">
@@ -147,7 +146,6 @@ const OrderConfirmation = () => {
        </table>
      </div>
 
-
      <div className="text-right text-lg font-semibold text-gray-700">
        <p>Subtotal: ₹{originalTotal.toFixed(2)}</p>
        {discountAmount > 0 && (
@@ -157,18 +155,19 @@ const OrderConfirmation = () => {
      </div>
      <h1 className="text-3xl font-bold mb-6 text-green-700">Visit Us Again!</h1>
    </div>   
-   <div className="p-4 bg-white rounded-lg shadow mt-4 text-center">
+   <div className="max-w-3xl p-4 bg-white rounded-lg shadow mt-4 text-center">
      {loyaltyPoints !== null && (
        <p className="text-green-700 text-lg font-medium">
          🎉 You have <strong>{loyaltyPoints}</strong> loyalty points!
        </p>
      )}
    </div>
-   <div id="invoice-section" className="max-w-3xl mx-auto px-4 py-8 bg-white rounded shadow">
+   <div id="invoice-section" className="max-w-3xl mx-auto px-4 py-4 bg-white rounded shadow">
      <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
        <button
          onClick={printInvoice}
-         className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+         //className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+         className="btn-outline">
          Download Invoice (PDF)
        </button>
        <button onClick={handleSendWhatsApp} className="btn-outline">

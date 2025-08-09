@@ -13,7 +13,6 @@ class CustomUser(AbstractUser):
        ('admin', 'Admin'),
    ]
 
-
    phone_number = models.CharField(max_length=20, unique=True)
    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
 

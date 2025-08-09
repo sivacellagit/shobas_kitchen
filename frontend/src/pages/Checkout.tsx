@@ -87,14 +87,16 @@ const Checkout = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 pt-8 pb-20">
+
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Checkout</h1>
 
       {cart.length === 0 ? (
         <p className="text-gray-500">Your cart is empty.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+        
           {/* Left Column - Order Summary */}
-          <div className="p-6 border border-gray-200 rounded-lg shadow-sm bg-white">
+          <div className="w-full max-w-none p-6 border border-gray-200 rounded-lg shadow-sm bg-white">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">Order Summary</h2>
             <ul className="mb-4 divide-y text-sm">
               {enrichedItems.map((item) => (

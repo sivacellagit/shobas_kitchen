@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const hasItems = cart.length > 0;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full">
       {/* Fixed Header */}
       <Header />
 

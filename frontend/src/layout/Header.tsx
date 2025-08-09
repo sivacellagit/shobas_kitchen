@@ -22,6 +22,9 @@ const Header = () => {
          <Link to="/" className={isActive("/")}>
            Home
          </Link>
+         <Link to="/login" className={isActive("/login")}>
+           Login
+         </Link>
          <Link to="/menu" className={isActive("/menu")}>
            Menu
          </Link>

@@ -11,6 +11,8 @@ from .views import (
    get_all_discount_configs
 )
 from utils.twilio_whatsapp import send_whatsapp_message
+from otp_auth import urls as otp_auth_urls
+from otp_auth.views import SendOTPView, VerifyOTPView, SecondStepLoginView, PasswordLoginView
 from .views import (
    MenuCategoryViewSet, MenuItemViewSet,
    OrderViewSet, OrderItemViewSet, InventoryItemViewSet,
@@ -58,7 +60,8 @@ urlpatterns = [
    path("config/discounts/", get_all_discount_configs, name="get_all_discount_configs"),
    path("config/first_time_discount_percent/", get_discount_percent),
    path('', include("customers.urls")),
-   path('', include(router.urls)),
+   #path('', include("router.urls")),
+   path('', include("otp_auth.urls")),
 ]
 
 

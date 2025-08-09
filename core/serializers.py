@@ -3,7 +3,10 @@ from customers.serializers import CustomerProfileSerializer
 from django.contrib.auth import get_user_model
 from .models import (
    CustomUser,
+   Staff,
+   Branch,
    MenuCategory,
+   Config,
    MenuItem,
    Order,
    OrderItem,
