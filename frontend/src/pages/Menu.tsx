@@ -5,7 +5,7 @@ import { useCustomer } from "../contexts/CustomerContext";
 import CustomerCheckFlow from "../components/CustomerCheckFlow";
 import { applyDiscounts } from "../utils/Discount";
 import api from "../utils/Api";
-
+import toast from "react-hot-toast";
 
 type MenuCategory = {
 id: number;
@@ -29,11 +29,8 @@ const [loading, setLoading] = useState(true);
 const [showModal, setShowModal] = useState(false);
 const [searchQuery, setSearchQuery] = useState("");
 const [discountedItems, setDiscountedItems] = useState<{ [key: number]: EnrichedItem }>({});
-
-
 const { addToCart } = useCart();
 const { isCustomerLoaded, customerNotFound, customer } = useCustomer();
-
 
 // Show modal when no customer is loaded
 useEffect(() => {
@@ -60,9 +57,6 @@ useEffect(() => {
   };
   fetchData();
 }, []);
-
-
-
 
 useEffect(() => {
   const fetchDiscounts = async () => {
@@ -105,7 +99,6 @@ const filteredItems = filteredCategory
         : item.category.id === filteredCategory
     )
   : items;
-
 
 return (
   <div className="overflow-x-auto w-full max-w-[100vw] px-4 sm:px-6">
@@ -235,18 +228,21 @@ return (
           <p className="text-sm text-gray-600 mb-2">₹{item.price}</p>
         )}
       </div>
-                    {!isPublicView && (
-                      <button
-                        className="mt-auto w-full px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700"
-                        onClick={() =>
-                          addToCart({ ...item, image: item.image || "" })
-                        }
-                      >
-                        Add to Cart   
-                      </button>
-)}  
-                    </div>
-                  </div>
+        {!isPublicView && (
+          <button
+            className="mt-auto w-full px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700"
+            onClick={() => {
+              addToCart({ ...item, price: Number(item.price), image: item.image || "" });
+              toast.success(`${item.name} added to the cart`);
+            }
+            }
+          >
+            Add to Cart   
+          </button>
+           )}  
+           
+        </div>
+      </div>
                 ))
               )}
         </div>

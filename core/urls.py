@@ -26,7 +26,8 @@ from .views import (
    CustomerRegisterView,
    StaffRegistrationView,
    AdminRegistrationView,
-   CustomLoginView
+   CustomLoginView,
+   dashboard_stats
 )
 
 
@@ -39,6 +40,7 @@ router.register(r'order-items', OrderItemViewSet)
 router.register(r'inventory', InventoryItemViewSet)
 router.register(r'feedback', FeedbackViewSet)
 router.register(r'employees', EmployeeViewSet)
+#router.register(r'staff', StaffRegistrationView.as_view(), name='staff-registration')
 router.register(r'loyalty-points', LoyaltyPointHistoryViewSet)
 router.register(r'offers', OfferViewSet)
 router.register(r'daily-sales', DailySalesSummaryViewSet)
@@ -50,7 +52,8 @@ urlpatterns = [
    path("register/customer/", CustomerRegisterView.as_view(), name="register_customer"),
    path("register/staff/", StaffRegistrationView.as_view(), name="register_staff"),
    path("register/admin/", AdminRegistrationView.as_view(), name="register_admin"),
-  
+   #path("menu-categories/", MenuCategoryViewSet.as_view()),
+   #path("menu-items/", MenuItemViewSet.as_view()),
    path("login/", CustomLoginView.as_view(), name="custom_login"),
    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
    #path('login/', CustomLoginAPIView.as_view(), name='custom-login'),
@@ -59,9 +62,11 @@ urlpatterns = [
    #path('orders/send_whatsapp_receipt/', get_purchased_item_ids, name='purchased-items'),
    path("config/discounts/", get_all_discount_configs, name="get_all_discount_configs"),
    path("config/first_time_discount_percent/", get_discount_percent),
+   path('staff/', StaffRegistrationView.as_view(), name='staff-registration'),
    path('', include("customers.urls")),
-   #path('', include("router.urls")),
+   path('', include(router.urls)),
    path('', include("otp_auth.urls")),
+   path("admin/dashboard-stats/", dashboard_stats, name="dashboard_stats"),
 ]
 
 

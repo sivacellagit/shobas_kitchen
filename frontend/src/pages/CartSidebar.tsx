@@ -113,20 +113,20 @@ const CartSidebar = ({ isOpen, onClose, isMobile }: Props) => {
                     )}
                     <div className="flex items-center gap-2 mt-1">
                       <button
-                        className="px-2 py-1 bg-gray-200 rounded"
+                        className="px-2 py-1 bg-gray-400 rounded"
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       >
                         -
                       </button>
                       <span>{item.quantity}</span>
                       <button
-                        className="px-2 py-1 bg-gray-200 rounded"
+                        className="px-2 py-1 bg-gray-400 rounded"
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       >
                         +
                       </button>
                       <button
-                        className="ml-auto text-sm text-red-500"
+                        className="ml-auto text-sm text-white-500"
                         onClick={() => removeFromCart(item.id)}
                       >
                         Remove
@@ -153,7 +153,7 @@ const CartSidebar = ({ isOpen, onClose, isMobile }: Props) => {
               </button>
               <button
                 onClick={clearCart}
-                className="w-full text-sm text-gray-500 mt-2 hover:text-red-600"
+                className="w-full text-sm text-white mt-2 hover:text-red-600"
               >
                 Clear Cart
               </button>

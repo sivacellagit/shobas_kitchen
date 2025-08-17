@@ -1,9 +1,9 @@
 // src/contexts/CustomerContext.tsx
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import axios from "axios";
+//import axios from "axios";
 import api from "../utils/Api";
-import toast from "react-hot-toast";
+//import toast from "react-hot-toast";
 
 
 export type Customer = {
@@ -19,6 +19,24 @@ export type Customer = {
  loyalty_points?: number;
 };
 
+export type CustomerForm = {
+  phone: string;
+  name: string;
+  email?: string;
+  address: string;
+  dateOfBirth?: string;
+  weddingDate?: string;
+};
+
+type CustomerContextType = {
+  customer: Customer | null;
+  isCustomerLoaded: boolean;
+  customerNotFound: boolean;
+  fetchCustomerByPhone: (phone: string) => Promise<boolean>;
+  saveNewCustomer: (form: CustomerForm) => Promise<void>;
+  setCustomer: (customer: Customer | null) => void;
+  clearCustomer: () => void;
+};
 
 /*
 type CustomerContextType = {
@@ -40,12 +58,13 @@ type CustomerContextType = {
  clearCustomer: () => void;
 };
 */
-//const CustomerContext = createContext<CustomerContextType | undefined>(undefined);
-const CustomerContext = createContext<any>(null);
+const CustomerContext = createContext<CustomerContextType | undefined>(undefined);
+//const CustomerContext = createContext<any>(null);
 
 
 export const CustomerProvider = ({ children }: { children: ReactNode }) => {
- const [customer, setCustomerState] = useState(null);
+// const [customer, setCustomerState] = useState(null);
+ const [customer, setCustomerState] = useState<Customer | null>(null);
  const [customerNotFound, setCustomerNotFound] = useState(false);
 
 
@@ -63,10 +82,11 @@ export const CustomerProvider = ({ children }: { children: ReactNode }) => {
      return false;
    }
  };
+
 /*
 const checkPhoneExists = async (phone: string) => {
  //const res = await axios.get(`/api/customers/lookup/?phone=${phone}`);
- const res = await axios.get(`/api/customers/customers/lookup?phone=${phone}`);
+ const res = await api.get(`/customers/lookup?phone=${phone}`);
  return res.data.exists; // You must implement this backend if needed
 };
 
@@ -100,7 +120,7 @@ const saveNewCustomer = async (form: any) => {
 */
 
 
-const saveNewCustomer = async (form: any) => {
+const saveNewCustomer = async (form: CustomerForm) => {
 try {
   const payload = {
     phone_number: form.phone,

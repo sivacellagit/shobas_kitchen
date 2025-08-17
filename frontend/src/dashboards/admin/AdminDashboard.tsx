@@ -1,5 +1,7 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+const navigate = useNavigate();
 
 
 const AdminDashboard = () => {
@@ -24,7 +26,7 @@ const AdminDashboard = () => {
          <p className="text-gray-600 text-sm mb-2">
            Create, update, or disable menu categories and items.
          </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+         <button onClick={() => navigate("/admin/menu")} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
            Go to Menu Management
          </button>
        </div>
@@ -36,7 +38,7 @@ const AdminDashboard = () => {
          <p className="text-gray-600 text-sm mb-2">
            Add or manage staff roles like cashier, chef, delivery.
          </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+         <button onClick={() => navigate("/admin/staff")} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
            Manage Staff
          </button>
        </div>
@@ -48,7 +50,7 @@ const AdminDashboard = () => {
          <p className="text-gray-600 text-sm mb-2">
            View daily, weekly, or custom date range reports.
          </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+         <button onClick={() => navigate("/admin/orders")} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
            View Reports
          </button>
        </div>
@@ -60,7 +62,7 @@ const AdminDashboard = () => {
          <p className="text-gray-600 text-sm mb-2">
            Manage loyalty point configurations and redemptions.
          </p>
-         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+         <button onClick={() => navigate("/admin/loyalty")} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
            Loyalty Settings
          </button>
        </div>

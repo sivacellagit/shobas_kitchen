@@ -3,6 +3,12 @@ import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
+import AdminLayout from "./admin/components/AdminLayout";
+import AdminHome from "./admin/components/AdminHome";
+import MenuManagement from "./admin/components/MenuManagement";
+import StaffManagement from "./admin/components/StaffManagement";
+import OrderReports from "./admin/components/OrderReports";
+import LoyaltyManagement from "./admin/components/LoyaltyManagement";
 import Checkout from "./pages/Checkout";
 import CartSidebar from "./pages/CartSidebar";
 import FloatingCartButton from "./components/FloatingCartButton";
@@ -64,10 +70,23 @@ function AppContent() {
            <Route path="/checkout" element={<Checkout />} />
            <Route path="/order-confirmation" element={<OrderConfirmation />} />
            <Route path="*" element={<Navigate to="/" replace />} />
+
+            {/* Admin Routes */}                       
+         <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminHome />} /> {/* Default dashboard */}
+            <Route path="menu" element={<MenuManagement />} />
+            <Route path="staff" element={<StaffManagement />} />
+            <Route path="orders" element={<OrderReports />} />
+            <Route path="loyalty" element={<LoyaltyManagement />} />
+        </Route>
+
+            {/* Catch-all route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
          </Routes>
          {/*<FloatingCartButton onClick={() => setCartOpen(true)} isVisible={!cartOpen && hasItems} />*/}
        </Layout>
    {/*  </main> */}
+   
    
      {/* Floating button for mobile/tablet */}
      <FloatingCartButton onClick={() => setCartOpen(true)} isVisible={!cartOpen && hasItems} />

@@ -101,7 +101,7 @@ class SendOTPView(APIView):
                expires_at=expires_at
            )
            logger.info(f"OTP {otp} generated for phone {phone}")
-          # send_otp_view(request)
+           send_otp_view(request)
            # TODO: Integrate with SMS/WhatsApp gateway
            print(f"🔐 Sending OTP {otp} to {phone}")
            return Response({"message": "OTP sent successfully"}, status=200)

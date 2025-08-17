@@ -1,7 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-
 
 // --- Types ---
 type Role = "customer" | "staff" | "admin" | null;

@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from core.throttles import FeedbackRateThrottle
 from rest_framework import status
 from django.contrib.auth.models import User
+from django.db.models import Sum, Count
 import logging
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.views import APIView
@@ -29,11 +30,47 @@ from utils.whatsapp import build_whatsapp_receipt
 from utils.twilio_whatsapp import send_whatsapp_message
 from customers.awards import award_loyalty_points
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAdminUser
+from datetime import date
+from .models import Order, OrderItem, LoyaltyPointHistory
 
 
 logger = logging.getLogger(__name__)
 
+@api_view(["GET"])
+#@permission_classes([IsAdminUser])
+@permission_classes([AllowAny])
+def dashboard_stats(request):
+    today = date.today()
 
+    # Orders Today
+    orders_today = Order.objects.filter(created_at__date=today)
+    revenue_today = orders_today.aggregate(total=Sum("total_amount"))["total"] or 0
+
+    # Top Selling Items (Today)
+    top_items_qs = (
+        OrderItem.objects.filter(order__created_at__date=today)
+        .values("item__name")
+        .annotate(quantity=Sum("quantity"))
+        .order_by("-quantity")[:5]
+    )
+    top_items = [{"name": x["item__name"], "quantity": x["quantity"]} for x in top_items_qs]
+
+    # Top Loyalty Customers (All Time)
+    top_cust_qs = (
+        LoyaltyPointHistory.objects.values("customer__name")
+        .annotate(points=Sum("points"))
+        .order_by("-points")[:5]
+    )
+    top_customers = [{"name": x["customer__name"], "points": x["points"]} for x in top_cust_qs]
+
+    return Response({
+        "ordersToday": orders_today.count(),
+        "revenueToday": float(revenue_today),
+        "topItems": top_items,
+        "topCustomers": top_customers,
+    })
+    
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def test_logging(request):

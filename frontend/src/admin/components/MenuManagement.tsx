@@ -1,3 +1,110 @@
+import React, { useEffect, useState } from "react";
+import api from "../../utils/Api";
+
+const MenuManagement = () => {
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+
+  const fetchCategories = () => {
+    api.get("/menu-categories/")
+      .then(res => setCategories(res.data))
+      .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const handleSave = () => {
+    if (editingId) {
+      api.put(`/menu-categories/${editingId}/`, { name })
+        .then(() => {
+          setEditingId(null);
+          setName("");
+          fetchCategories();
+        });
+    } else {
+      api.post("/menu-categories/", { name })
+        .then(() => {
+          setName("");
+          fetchCategories();
+        });
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Delete this category?")) {
+      api.delete(`/menu-categories/${id}/`)
+        .then(fetchCategories);
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Menu Management</h1>
+
+      {/* Form */}
+      <div className="mb-4 flex gap-2">
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Category name"
+          className="border px-2 py-1"
+        />
+        <button
+          onClick={handleSave}
+          className="bg-blue-600 text-white px-3 py-1 rounded"
+        >
+          {editingId ? "Update" : "Add"}
+        </button>
+        {editingId && (
+          <button
+            onClick={() => { setEditingId(null); setName(""); }}
+            className="bg-gray-500 text-white px-3 py-1 rounded"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+
+      {/* List */}
+      <table className="min-w-full border">
+        <thead>
+          <tr>
+            <th className="border px-2 py-1">Name</th>
+            <th className="border px-2 py-1">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((cat: any) => (
+            <tr key={cat.id}>
+              <td className="border px-2 py-1">{cat.name}</td>
+              <td className="border px-2 py-1 space-x-2">
+                <button
+                  onClick={() => { setEditingId(cat.id); setName(cat.name); }}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(cat.id)}
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default MenuManagement;
+
+/*
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MenuItemFormModal from "./MenuItemFormModal";
@@ -116,3 +223,4 @@ const MenuManagement = () => {
 
 
 export default MenuManagement;
+*/

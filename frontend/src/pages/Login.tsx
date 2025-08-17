@@ -41,7 +41,9 @@ const Login = () => {
     setLoading(true);
     setMessage("");
     try {
+      console.log("Before Sending OTP to:", phoneNumber);
       const res = await api.post("/auth/send-otp/", { phone_number: phoneNumber });
+      console.log("After Sending OTP to:", phoneNumber);
       setRole(res.data.role);
       setIsRegistered(res.data.is_registered);
       setStep("otp");

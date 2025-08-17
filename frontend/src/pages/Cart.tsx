@@ -12,11 +12,9 @@ const Cart = () => {
  const isGuest = customer?.username === "guest";
  const navigate = useNavigate();
 
-
  const [enrichedItems, setEnrichedItems] = useState<EnrichedItem[]>([]);
  const [discountPercent, setDiscountPercent] = useState(10);
  const [total, setTotal] = useState(0);
-
 
  useEffect(() => {
  const enrichCart = async () => {
@@ -27,7 +25,6 @@ const Cart = () => {
     setTotal(enrichedItems.reduce((sum, item) => sum + item.discountedPrice, 0));
      return;
    }
-
 
    try {
     const res = await api.get(`/orders/purchased-items/?customer_id=${customer.id}`);
@@ -42,10 +39,8 @@ const Cart = () => {
    }
  };
 
-
  enrichCart();
 }, [cart, customer]);
-
 
  return (
    <div className="p-6">
@@ -77,29 +72,33 @@ const Cart = () => {
                >
                  Remove
                </button>
+               
              </div>
            ))}
          </div>
-         <div className="mt-6">
+         <div className="mt-6"> 
+         {/*<div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">*/}
            <p className="text-xl font-bold">Total: ₹{total.toFixed(2)}</p>
+           <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
            <button
              onClick={() => navigate("/checkout")}
-             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+             className="btn-outline"
            >
              Proceed to Checkout
            </button>
+
            <button
              onClick={clearCart}
-             className="w-full text-sm text-gray-500 mt-2 hover:text-red-600"
+             className="btn-outline"
            >
              Clear Cart
            </button>
+           </div>
          </div>
        </>
      )}
    </div>
  );
 };
-
 
 export default Cart;

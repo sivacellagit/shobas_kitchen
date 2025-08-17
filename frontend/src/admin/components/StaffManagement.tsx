@@ -1,4 +1,87 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../utils/Api";
+
+const StaffManagement = () => {
+  const [staff, setStaff] = useState([]);
+  const [form, setForm] = useState({ name: "", role: "", contact: "" });
+
+  const fetchStaff = () => {
+    api.get("/employees/")
+      .then(res => setStaff(res.data))
+      .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchStaff();
+  }, []);
+
+  const handleSubmit = () => {
+    api.post("/employees/", form)
+      .then(() => {
+        setForm({ name: "", role: "", contact: "" });
+        fetchStaff();
+      });
+  };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Delete this staff member?")) {
+      api.delete(`/employees/${id}/`).then(fetchStaff);
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Staff Management</h1>
+
+      {/* Form */}
+      <div className="mb-4 flex gap-2">
+        <input
+          placeholder="Name"
+          value={form.name}
+          onChange={e => setForm({ ...form, name: e.target.value })}
+          className="border px-2 py-1"
+        />
+        <input
+          placeholder="Role"
+          value={form.role}
+          onChange={e => setForm({ ...form, role: e.target.value })}
+          className="border px-2 py-1"
+        />
+        <input
+          placeholder="Contact"
+          value={form.contact}
+          onChange={e => setForm({ ...form, contact: e.target.value })}
+          className="border px-2 py-1"
+        />
+        <button
+          onClick={handleSubmit}
+          className="bg-blue-600 text-white px-3 py-1 rounded"
+        >
+          Add Staff
+        </button>
+      </div>
+
+      {/* List */}
+      <ul>
+        {staff.map((s: any) => (
+          <li key={s.id} className="mb-2 flex justify-between">
+            {s.name} ({s.role}) - {s.contact}
+            <button
+              onClick={() => handleDelete(s.id)}
+              className="bg-red-500 text-white px-2 py-1 rounded"
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default StaffManagement;
+
+/*import { useEffect, useState } from "react";
 import axios from "axios";
 
 
@@ -91,7 +174,7 @@ const handleSaveStaff = async (staff: StaffForm) => {
          onClick={() => alert("TODO: Add staff modal")}
        >
          + Add Staff
-       </button> */}
+       </button> 
        <button
          onClick={handleAddStaff}
          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -172,7 +255,7 @@ const handleSaveStaff = async (staff: StaffForm) => {
                      className="text-blue-600 hover:underline mr-3"
                    >
                      Edit
-                   </button> */}
+                   </button> 
                    <button
                      onClick={() => handleEditStaff(staff)}
                      className="text-blue-600 hover:underline"
@@ -209,3 +292,4 @@ const handleSaveStaff = async (staff: StaffForm) => {
 
 
 export default StaffManagement;
+*/

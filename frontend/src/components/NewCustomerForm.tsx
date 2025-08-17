@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useCustomer } from "../contexts/CustomerContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import api from "../utils/Api";
 
 
 type Props = {
@@ -43,12 +44,10 @@ const NewCustomerForm = ({ phone = "", onRegistered }: Props) => {
  const handlePhoneBlur = async () => {
    if (!form.phone) return;
 
-
    try {
-     const res = await axios.get("/api/customers/check-phone/", {
+     const res = await api.get("/customers/check-phone/", {
        params: { phone: form.phone },
      });
-
 
      if (res.data.exists) {
        setPhoneError("Phone number already exists.");
