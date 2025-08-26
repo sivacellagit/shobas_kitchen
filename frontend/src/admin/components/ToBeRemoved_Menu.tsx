@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 //import axios from "axios";
-import { useCart } from "../contexts/CartContext";
-import { useCustomer } from "../contexts/CustomerContext";
-import CustomerCheckFlow from "../components/CustomerCheckFlow";
-import { applyDiscounts } from "../utils/Discount";
-import type { EnrichedItem } from "../utils/Discount";
-import api from "../utils/Api";
+import { useCart } from "../../contexts/CartContext";
+import { useCustomer } from "../../contexts/CustomerContext";
+import CustomerCheckFlow from "../../components/CustomerCheckFlow";
+import { applyDiscounts } from "../../utils/Discount";
+import type { EnrichedItem } from "../../utils/Discount";
+import api from "../../utils/Api";
 import toast from "react-hot-toast";
 
 type MenuCategory = {

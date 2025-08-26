@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
+/*import {
  createBrowserRouter,
  RouterProvider,
 } from "react-router-dom";
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+*/
 import axios from "axios";
 import App from "./App";
 import "./index.css";

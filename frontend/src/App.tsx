@@ -1,21 +1,29 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Layout from "./layout/Layout";
+
+// Customer pages
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import CartSidebar from "./pages/CartSidebar";
+import OrderConfirmation from './pages/OrderConfirmation';
+
+// Admin-specific components
+import AdminLogin from "./pages/AdminLogin";
+//import Dashobard from "./dashboards/admin/AdminDashboard"
+import AdminRoute from "./admin/components/AdminRoute";
 import AdminLayout from "./admin/components/AdminLayout";
 import AdminHome from "./admin/components/AdminHome";
 import MenuManagement from "./admin/components/MenuManagement";
 import StaffManagement from "./admin/components/StaffManagement";
 import OrderReports from "./admin/components/OrderReports";
 import LoyaltyManagement from "./admin/components/LoyaltyManagement";
-import Checkout from "./pages/Checkout";
-import CartSidebar from "./pages/CartSidebar";
+
 import FloatingCartButton from "./components/FloatingCartButton";
 import { useState, useEffect } from "react";
 import { useCart } from "./contexts/CartContext";
 import { CustomerProvider } from "./contexts/CustomerContext";
-import OrderConfirmation from './pages/OrderConfirmation';
 import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 //import AppContent from "./AppContent";
@@ -71,15 +79,35 @@ function AppContent() {
            <Route path="/order-confirmation" element={<OrderConfirmation />} />
            <Route path="*" element={<Navigate to="/" replace />} />
 
-            {/* Admin Routes */}                       
+        <Route path="/adminlogin" element={<AdminLogin />} />
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="home" element={<AdminHome />} />
+            <Route path="pos" element={<Menu /> } />
+            <Route path="cart" element={<Cart />} />
+            <Route path="cart-sidebar" element={<CartSidebar isOpen={true} onClose={() => {}} isMobile={false} />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="order-confirmation" element={<OrderConfirmation />} />
+
+            {/* Admin-only features */}
+            <Route path="menu" element={<div>Menu Management Page <MenuManagement /></div> } />
+            <Route path="staff" element={<div>Staff Management Page <StaffManagement /></div>} />
+            <Route path="orders" element={<div>Order Reports Page <OrderReports /></div>} />
+            <Route path="loyalty" element={<div>Loyalty Program Page <LoyaltyManagement /></div>} />
+            <Route path="menu" element={<Menu isPublicView={false} />} />
+          </Route>
+        </Route>
+
+            {/* Admin Routes                      
          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminHome />} /> {/* Default dashboard */}
+            <Route index element={<AdminHome />} /> {/* Default dashboard
             <Route path="menu" element={<MenuManagement />} />
             <Route path="staff" element={<StaffManagement />} />
             <Route path="orders" element={<OrderReports />} />
             <Route path="loyalty" element={<LoyaltyManagement />} />
         </Route>
-
+              */}
             {/* Catch-all route */}
             <Route path="*" element={<Navigate to="/" replace />} />
          </Routes>

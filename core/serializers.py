@@ -22,7 +22,10 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from customers.models import CustomerProfile
+from rest_framework_simplejwt.tokens import RefreshToken
+import logging
 
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -30,31 +33,84 @@ User = get_user_model()
 class CustomUserSerializer(serializers.ModelSerializer):
    class Meta:
        model = User
-       fields = ['id', 'username', 'email', 'phone_number', 'first_name', 'last_name', 'is_staff', 'is_superuser']
+       fields = ['id', 'username', 'email', 'phone_number', 'first_name', 'last_name', 'is_staff', 'is_superuser', "role"]
+
+   def get_role(self, obj):
+        logger.info(f"Getting role for user: {obj.username} - is_staff: {obj.is_staff}, is_superuser: {obj.is_superuser}")
+        
+        if obj.is_superuser:
+            return "admin"
+        elif obj.is_staff:
+            return "staff"
+        return "customer"
+
+#class CustomLoginSerializer(TokenObtainPairSerializer):
+#   username_field = 'username'  # Placeholder, we'll override validate()
+
+#  def validate(self, attrs):
+#       login = attrs.get("username")
+#       password = attrs.get("password")
+
+#       user_obj = User.objects.filter(email__iexact=login).first() or \
+#                  User.objects.filter(phone_number__iexact=login).first()
 
 
-class CustomLoginSerializer(TokenObtainPairSerializer):
-   username_field = 'username'  # Placeholder, we'll override validate()
+#       if user_obj and user_obj.check_password(password):
+#           data = super().get_token(user_obj)
+#           return {
+#               'refresh': str(data),
+#               'access': str(data.access_token),
+#               'user': CustomUserSerializer(user_obj).data
+#           }
+#       raise serializers.ValidationError(_("Invalid credentials"))
 
+class CustomLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
-   def validate(self, attrs):
-       login = attrs.get("username")
-       password = attrs.get("password")
+    def validate(self, attrs):
+        username = attrs.get("username")
+        password = attrs.get("password")
 
+        # allow login with email or username
+        try:
+            if "@" in username:
+                user_obj = User.objects.get(email=username)
+                username = user_obj.username
+            else:
+                user_obj = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid username or password")
 
-       user_obj = User.objects.filter(email__iexact=login).first() or \
-                  User.objects.filter(phone_number__iexact=login).first()
+        user = authenticate(username=username, password=password)
+        if not user:
+            raise serializers.ValidationError("Invalid username or password")
 
+        refresh = RefreshToken.for_user(user)
 
-       if user_obj and user_obj.check_password(password):
-           data = super().get_token(user_obj)
-           return {
-               'refresh': str(data),
-               'access': str(data.access_token),
-               'user': CustomUserSerializer(user_obj).data
-           }
-       raise serializers.ValidationError(_("Invalid credentials"))
+        # determine role
+        if user.is_superuser:
+            role = "admin"
+        elif user.is_staff:
+            role = "staff"
+        else:
+            role = "customer"
 
+        return {
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "phone_number": getattr(user, "phone_number", ""),
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "is_staff": user.is_staff,
+                "is_superuser": user.is_superuser,
+                "role": role,  # ✅ add role here
+            },
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+        }
 
 class CustomerRegistrationSerializer(serializers.ModelSerializer):
    name = serializers.CharField(write_only=True)

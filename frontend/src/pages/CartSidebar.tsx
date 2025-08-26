@@ -24,6 +24,7 @@ const CartSidebar = ({ isOpen, onClose, isMobile }: Props) => {
   const [discountPercent, setDiscountPercent] = useState(0);
   const [total, setTotal] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isPOS = location.pathname.startsWith("/admin");
 
   useEffect(() => {
     const enrichCart = async () => {
@@ -146,7 +147,7 @@ const CartSidebar = ({ isOpen, onClose, isMobile }: Props) => {
                 <span>₹{total.toFixed(2)}</span>
               </div>
               <button
-                onClick={() => navigate("/checkout")}
+                onClick={() => navigate(isPOS ? "/admin/checkout" : "/checkout")}
                 className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
               >
                 Checkout

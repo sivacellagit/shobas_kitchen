@@ -21,12 +21,12 @@ export type EnrichedItem = CartItem & {
  appliedOffer: "first_order" | "item_level" | null;
 };
 
-
+/*
 type OfferData = {
  purchased_item_ids: number[];
  has_prior_orders: boolean;
 };
-
+*/
 
 export async function applyDiscounts(
  cartItems: CartItem[],

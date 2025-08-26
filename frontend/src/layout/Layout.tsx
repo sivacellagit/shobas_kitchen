@@ -1,5 +1,5 @@
 // src/layout/Layout.tsx
-import Navbar from "../components/NavBar";
+//import Navbar from "../components/NavBar";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useCart } from "../contexts/CartContext";

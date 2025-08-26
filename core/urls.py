@@ -52,11 +52,9 @@ urlpatterns = [
    path("register/customer/", CustomerRegisterView.as_view(), name="register_customer"),
    path("register/staff/", StaffRegistrationView.as_view(), name="register_staff"),
    path("register/admin/", AdminRegistrationView.as_view(), name="register_admin"),
-   #path("menu-categories/", MenuCategoryViewSet.as_view()),
-   #path("menu-items/", MenuItemViewSet.as_view()),
-   path("login/", CustomLoginView.as_view(), name="custom_login"),
+   #path("login/", CustomLoginView.as_view(), name="custom_login"),
    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-   #path('login/', CustomLoginAPIView.as_view(), name='custom-login'),
+   path('login/', CustomLoginAPIView.as_view(), name='custom-login'),
    path('orders/purchased-items/', get_purchased_item_ids, name='purchased-items'),
    #path("orders/send_whatsapp_message/", send_whatsapp_message),
    #path('orders/send_whatsapp_receipt/', get_purchased_item_ids, name='purchased-items'),
@@ -67,6 +65,8 @@ urlpatterns = [
    path('', include(router.urls)),
    path('', include("otp_auth.urls")),
    path("admin/dashboard-stats/", dashboard_stats, name="dashboard_stats"),
+   #path("auth/login/", CustomLoginView.as_view(), name="token_obtain_pair"),
+   path("auth/login/", CustomLoginAPIView.as_view(), name="custom_login"),
 ]
 
 

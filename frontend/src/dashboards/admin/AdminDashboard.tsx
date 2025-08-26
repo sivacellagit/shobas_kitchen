@@ -1,11 +1,10 @@
-import React from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 const navigate = useNavigate();
 
 
 const AdminDashboard = () => {
- const { auth } = useAuth();
+ const { user } = useAuth();
 
 
  return (
@@ -14,7 +13,7 @@ const AdminDashboard = () => {
 
 
      <div className="mb-4 text-lg">
-       Welcome, <strong>{auth?.user?.username || "Admin"}</strong>!
+       Welcome, <strong>{user?.user?.username || "Admin"}</strong>!
      </div>
 
 

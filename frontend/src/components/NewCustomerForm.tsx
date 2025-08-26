@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useCustomer } from "../contexts/CustomerContext";
 import toast from "react-hot-toast";
-import axios from "axios";
 import api from "../utils/Api";
 
 

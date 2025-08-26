@@ -1,14 +1,15 @@
 // src/contexts/CustomerContext.tsx
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
+import type { ReactNode } from "react";
 //import axios from "axios";
 import api from "../utils/Api";
 //import toast from "react-hot-toast";
 
 
 export type Customer = {
- user?: string; // Optional username or user id
- customer_id?: string;
+ username?: string; // Optional username or user id
+ id?: string;
  name: string;
  phone_number: string;
  email?: string;

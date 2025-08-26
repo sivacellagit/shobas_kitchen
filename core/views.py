@@ -223,12 +223,8 @@ class CustomerRegisterView(generics.CreateAPIView):
    serializer_class = CustomerRegistrationSerializer
    permission_classes = [AllowAny]
 
-
-
-
 class StaffRegistrationView(APIView):
    permission_classes = [IsAdminUser]  # Only superusers
-
 
    def post(self, request):
        serializer = StaffSerializer(data=request.data)
@@ -236,8 +232,6 @@ class StaffRegistrationView(APIView):
            user = serializer.save()
            return Response({"message": "Staff registered", "user_id": user.id}, status=status.HTTP_201_CREATED)
        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class AdminRegistrationView(APIView):
@@ -250,8 +244,6 @@ class AdminRegistrationView(APIView):
            user = serializer.save()
            return Response({"message": "Admin registered", "user_id": user.id}, status=status.HTTP_201_CREATED)
        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class CustomLoginView(TokenObtainPairView):

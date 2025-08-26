@@ -1,6 +1,6 @@
-import Footer from "../layout/Footer";
-import Layout from "../layout/Layout";
-import Header from "../layout/Header";
+//import Footer from "../layout/Footer";
+//import Layout from "../layout/Layout";
+//import Header from "../layout/Header";
 
 const Home = () => {
   return (
@@ -55,7 +55,8 @@ const Home = () => {
           <section className="text-center bg-green-100 py-6 rounded-lg shadow">
             <h3 className="text-xl font-bold text-green-800 mb-2">🚚 Takeaway Made Simple</h3>
             <p className="text-gray-700">
-              Place your order online or offline and enjoy a smooth, fast, and delightful experience.
+              {/*Place your order online or offline and enjoy a smooth, fast, and delightful experience.*/}
+              Browse our menu, place your order offline, and let us serve you food that feels like home
             </p>
             <p className="mt-3 font-medium text-green-900">
               👉 <strong>Home food is the best food</strong>

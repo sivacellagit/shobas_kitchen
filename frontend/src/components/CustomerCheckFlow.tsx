@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { useCustomer } from "../contexts/CustomerContext";
 import NewCustomerForm from "./NewCustomerForm";
 import toast from "react-hot-toast";
-import axios from "axios";
 import api from "../utils/Api";
-
 
 const CustomerCheckFlow = () => {
  const [phone, setPhone] = useState("");

@@ -9,7 +9,7 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"customer" | "staff" | "admin" | null>(null);
-  const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
+  const [, setIsRegistered] = useState<boolean | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

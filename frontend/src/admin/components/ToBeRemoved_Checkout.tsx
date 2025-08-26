@@ -1,12 +1,12 @@
 // src/pages/Checkout.tsx
-import { useCart } from "../contexts/CartContext";
-import { useCustomer } from "../contexts/CustomerContext";
+import { useCart } from "../../contexts/CartContext";
+import { useCustomer } from "../../contexts/CustomerContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NewCustomerForm from "../components/NewCustomerForm";
-import { applyDiscounts } from "../utils/Discount";
-import api from "../utils/Api";
-import type { EnrichedItem } from "../utils/Discount";
+import NewCustomerForm from "../../components/NewCustomerForm";
+import { applyDiscounts } from "../../utils/Discount";
+import api from "../../utils/Api";
+import type { EnrichedItem } from "../../utils/Discount";
 
 const Checkout = () => {
   const { cart, clearCart } = useCart();
@@ -23,7 +23,6 @@ const Checkout = () => {
   const [enrichedItems, setEnrichedItems] = useState<EnrichedItem[]>([]);
   const [total, setTotal] = useState(0);
   const [discountPercent, setDiscountPercent] = useState(10);
-  const isPOS = location.pathname.startsWith("/admin");
 
   useEffect(() => {
     const enrich = async () => {
@@ -73,7 +72,7 @@ const Checkout = () => {
     try {
       const response = await api.post("/orders/", orderData);
       const order = response.data;
-      navigate(isPOS ? "/admin/order-confirmation" : "/order-confirmation", { state: { order } });
+      navigate("/order-confirmation", { state: { order } });
       clearCart();
       clearCustomer();
     } catch (error) {

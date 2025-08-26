@@ -6,7 +6,6 @@ type Branch = {
  name: string;
 };
 
-
 type StaffForm = {
  id?: number;
  name: string;
@@ -56,7 +55,7 @@ const StaffModal = ({ isOpen, onClose, onSubmit, initialData, branches }: StaffM
    }
  }, [initialData]);
 
-
+/*
  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
    const { name, value, type, checked } = e.target;
    setFormData(prev => ({
@@ -64,7 +63,22 @@ const StaffModal = ({ isOpen, onClose, onSubmit, initialData, branches }: StaffM
      [name]: type === "checkbox" ? checked : value,
    }));
  };
+*/
 
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+) => {
+  const { name, value, type } = e.target;
+  const newValue =
+    type === "checkbox" && e.target instanceof HTMLInputElement
+      ? e.target.checked
+      : value;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: newValue,
+  }));
+};
 
  const handleBranchChange = (id: number) => {
    setFormData(prev => {

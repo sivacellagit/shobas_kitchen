@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import api from "../utils/Api";
-import { useCustomer } from "../contexts/CustomerContext";
+//import { useCustomer } from "../contexts/CustomerContext";
 
 
 const OrderConfirmation = () => {

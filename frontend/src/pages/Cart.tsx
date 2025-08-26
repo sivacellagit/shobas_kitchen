@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { applyDiscounts } from "..//utils/Discount";
 import api from "../utils/Api";
 import type { EnrichedItem } from "..//utils/Discount"
+
 const Cart = () => {
  const { cart, removeFromCart, clearCart } = useCart();
  const { customer } = useCustomer();
@@ -13,7 +14,7 @@ const Cart = () => {
  const navigate = useNavigate();
 
  const [enrichedItems, setEnrichedItems] = useState<EnrichedItem[]>([]);
- const [discountPercent, setDiscountPercent] = useState(10);
+ const [ , setDiscountPercent] = useState(10);
  const [total, setTotal] = useState(0);
 
  useEffect(() => {
